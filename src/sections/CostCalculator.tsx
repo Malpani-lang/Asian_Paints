@@ -108,7 +108,7 @@ export function CostCalculator() {
   const annual = r.holding + r.writeoff;
 
   return (
-    <Section id="calculator" n={2} eyebrow="Service, days & holding cost" tone="white" tags={['assumption']}
+    <Section id="calculator" n={1} eyebrow="Service, days & holding cost" tone="white" tags={['assumption']}
       title={<>Every day of inventory has a price. <span className="text-violet">Every point of service has a value.</span></>}
       lede="Pick a stage and move the levers. Change today’s days or service, or the service you want, and see what it does to inventory days, the working capital tied up and the annual holding cost. The table on the right answers the mentors’ question: why this many days, not one more or one less?">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">

@@ -5,12 +5,9 @@ import { useActiveSection } from './hooks/useActiveSection';
 import { usePresentation } from './hooks/usePresentation';
 import { ModelProvider } from './state';
 import { Hero } from './sections/Hero';
-import { Today } from './sections/Today';
 import { CostCalculator } from './sections/CostCalculator';
 import { NetworkTest } from './sections/NetworkTest';
 import { Impact } from './sections/Impact';
-import { EdgeCases } from './sections/EdgeCases';
-import { HowItRuns } from './sections/HowItRuns';
 import { Footer } from './sections/Footer';
 
 export default function App() {
@@ -26,12 +23,9 @@ export default function App() {
         <Rail active={active} />
         <main>
           <Hero />
-          <Today />
           <CostCalculator />
           <NetworkTest />
           <Impact />
-          <EdgeCases />
-          <HowItRuns />
         </main>
         <Footer />
         {pres.on && <PresentHUD idx={pres.idx} go={pres.go} exit={() => pres.setOn(false)} />}

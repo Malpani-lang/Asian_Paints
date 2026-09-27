@@ -50,7 +50,7 @@ export function Impact() {
   const maxRel = Math.max(...IDS.map((id) => Math.abs(m.results[id].release)), 0.01);
 
   return (
-    <Section id="impact" n={4} eyebrow="Business impact" tone="white" tags={['assumption']}
+    <Section id="impact" n={3} eyebrow="Business impact" tone="white" tags={['assumption']}
       title={<>What PRISM is worth — <span className="text-violet">with the arithmetic in the open.</span></>}
       lede={<>Everything below comes from the calculator and network test above, so it moves when you move them. Figures are per <b>₹{f(m.globals.fgBase, 0)} Cr of finished-goods inventory</b> (type your own base to rescale). One-time cash is never added to the annual P&amp;L.</>}>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

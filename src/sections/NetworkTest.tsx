@@ -1,60 +1,10 @@
 import { useState } from 'react';
-import { AlertTriangle, Check, ChevronDown, Clock, X } from 'lucide-react';
+import { AlertTriangle, ChevronDown, Clock } from 'lucide-react';
 import { Section, Tag, Takeaway } from '../components/ui';
 import { Slider } from '../components/Slider';
 import { STAGE } from '../data/caseData';
 import { useModel, IDS } from '../state';
-import { f, lakh, responseHours, type NetOption } from '../utils/model';
-import type { StageId } from '../types';
-
-const OPT: { o: NetOption; t: string; d: string }[] = [
-  { o: 'depot', t: 'Decentralised', d: 'Held at depots, dealer served in SLA' },
-  { o: 'hybrid', t: 'Hybrid', d: 'Depot minimum for SLA-bound demand, rest pooled at hub' },
-  { o: 'hub', t: 'Centralised', d: 'Held only at regional hubs' },
-];
-
-function StageRow({ id }: { id: StageId }) {
-  const m = useModel();
-  const rec = m.recs[id];
-  const chosen = m.chosen[id];
-  const st = STAGE[id];
-  const depot = rec.rows[0];
-  return (
-    <div className="card overflow-hidden">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-paper-line px-4 py-2.5" style={{ background: `${st.color}0F` }}>
-        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: st.color }} /><b style={{ color: st.color }}>{st.name}</b><span className="text-[16px] text-ink-3">{Math.round(m.params[id].a * 100)}% of demand must meet the dealer SLA</span></div>
-        <span className="text-[16px] text-ink-3">Recommended: <b className="text-aubergine">{OPT.find((x) => x.o === rec.best)!.t}</b></span>
-      </div>
-      <div className="grid gap-3 p-3 lg:grid-cols-3">
-        {rec.rows.map((row) => {
-          const o = OPT.find((x) => x.o === row.o)!;
-          const on = chosen === row.o;
-          const dSys = row.systemDays - depot.systemDays;
-          return (
-            <button key={row.o} onClick={() => m.setNetChoice((p) => ({ ...p, [id]: row.o }))} aria-pressed={on}
-              className={`rounded-xl border p-4 text-left transition-all ${on ? 'shadow-pop' : 'hover:border-violet'} ${!row.r.net.slaOk ? 'bg-vermilion-soft/40' : 'bg-white'}`}
-              style={{ borderColor: on ? st.color : undefined, outline: on ? `2px solid ${st.color}` : undefined }}>
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[20px] font-bold text-aubergine">{o.t}</span>
-                {row.r.net.slaOk ? <span className="inline-flex items-center gap-1 rounded bg-[#E3F4F0] px-2 py-0.5 text-[14px] font-bold text-st-maturity"><Check size={14} /> SLA kept</span>
-                  : <span className="inline-flex items-center gap-1 rounded bg-vermilion px-2 py-0.5 text-[14px] font-bold text-white"><X size={14} /> SLA broken</span>}
-              </div>
-              <div className="mt-1 text-[15px] text-ink-3">{row.o === 'hybrid' && m.params[id].a >= 1 ? 'All demand is SLA-bound here — same as decentralised' : o.d}</div>
-              <dl className="num mt-3 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1.5 text-[18px]">
-                <dt className="text-ink-3">Company days</dt><dd className="text-right font-semibold">{f(row.apDays)} d</dd>
-                <dt className="text-ink-3">+ dealer days</dt><dd className="text-right font-semibold" style={{ color: row.r.net.channelDays > 0.05 ? '#C21E2B' : undefined }}>{row.r.net.channelDays > 0.05 ? '+' : ''}{f(row.r.net.channelDays)} d</dd>
-                <dt className="text-ink-3">System days</dt><dd className="text-right font-bold" style={{ color: dSys > 0.05 ? '#C21E2B' : dSys < -0.05 ? '#0F8A73' : '#2A0F4F' }}>{f(row.systemDays)} d</dd>
-                <dt className="text-ink-3">Extra freight / yr</dt><dd className="text-right">{lakh(row.r.freight)}</dd>
-                <dt className="text-ink-3">Total cost / yr</dt><dd className="text-right font-bold text-aubergine">{lakh(row.annual)}</dd>
-              </dl>
-              {on && <div className="mt-3 font-mono text-[13px] font-bold uppercase tracking-wider" style={{ color: st.color }}>● in the business case</div>}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+import { f, responseHours } from '../utils/model';
 
 export function NetworkTest() {
   const m = useModel();
@@ -62,10 +12,9 @@ export function NetworkTest() {
   const [adv, setAdv] = useState(false);
   const r = responseHours(g);
   const introHub = m.recs.intro.rows[2]; const introDepot = m.recs.intro.rows[0];
-  const brokenChosen = IDS.filter((id) => !m.recs[id].rows.find((x) => x.o === m.chosen[id])!.r.net.slaOk);
 
   return (
-    <Section id="network" n={3} eyebrow="Distribution network stress test" tags={['mentor', 'assumption']}
+    <Section id="network" n={2} eyebrow="Distribution network stress test" tags={['mentor', 'assumption']}
       title={<>Centralise only where the <span className="text-violet">dealer promise</span> and the <span className="text-violet">total days</span> both survive.</>}
       lede="Every option is tested on three things before it is allowed: does the dealer still get stock within the SLA (4 hours metro, 12 hours upcountry — the same for every dealer), what happens to total days once dealers react, and what it costs.">
       <div className="mb-4 grid gap-3 lg:grid-cols-[1fr_1.4fr]">
@@ -89,10 +38,7 @@ export function NetworkTest() {
         </div>
       </div>
 
-      <div className="grid gap-3">{IDS.map((id) => <StageRow key={id} id={id} />)}</div>
-      {brokenChosen.length > 0 && <div className="mt-3 rounded-lg bg-vermilion px-4 py-2 text-[13px] font-semibold text-white">You have selected an option that breaks the SLA for {brokenChosen.map((x) => STAGE[x].name).join(', ')}. The business case below includes it — the jury will ask about it.</div>}
       <div className="mt-2 flex flex-wrap items-center gap-3">
-        <button className="btn-ghost !py-1 text-[12.5px]" onClick={() => m.setNetChoice({})}>Use recommended options</button>
         <button onClick={() => setAdv((a) => !a)} className="flex items-center gap-1 text-[12.5px] font-semibold text-ink-2" aria-expanded={adv}><ChevronDown size={14} className={adv ? 'rotate-180' : ''} /> Network assumptions</button>
       </div>
       {adv && (

@@ -4,7 +4,6 @@ Interactive business-impact site for PRISM (Product-lifecycle Responsive Invento
 
 **Sections**
 - Days & cost calculator
-- Distribution-network stress test
 - Business impact
 
 Every figure is per ₹100 Cr of finished-goods inventory. Figures are labelled as CASE (Round 2 case), MENTOR (Asian Paints mentor session), ASSUMPTION or DERIVED. The **Assumptions** drawer lists each assumption with its justification.

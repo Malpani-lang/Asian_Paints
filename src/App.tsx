@@ -6,7 +6,6 @@ import { usePresentation } from './hooks/usePresentation';
 import { ModelProvider } from './state';
 import { Hero } from './sections/Hero';
 import { CostCalculator } from './sections/CostCalculator';
-import { NetworkTest } from './sections/NetworkTest';
 import { Impact } from './sections/Impact';
 import { Footer } from './sections/Footer';
 
@@ -24,7 +23,6 @@ export default function App() {
         <main>
           <Hero />
           <CostCalculator />
-          <NetworkTest />
           <Impact />
         </main>
         <Footer />

@@ -2,7 +2,6 @@
 export const SECTIONS = [
   { id: 'hero', short: 'PRISM', label: 'PRISM — business case' },
   { id: 'calculator', short: 'Days & cost', label: 'Service, days & holding cost' },
-  { id: 'network', short: 'Network test', label: 'Network stress test' },
   { id: 'impact', short: 'Impact', label: 'Business impact' },
 ] as const;
 export type SectionId = (typeof SECTIONS)[number]['id'];

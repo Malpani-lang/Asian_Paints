@@ -124,7 +124,7 @@ export function CostCalculator() {
           <Slider id={`s1-${id}`} label="Proposed service level" value={inp.sl1} onChange={(v) => m.setInput(id, 'sl1', v)} min={75} max={99.5} step={0.1} unit="%" accent={st.color}
             marks={[{ v: p.floor, label: 'floor', color: '#E3342F' }, { v: p.cap, label: 'cap', color: '#6A6180' }, ...(eco.star >= 75 ? [{ v: Math.min(99.5, eco.star), label: 'optimum', color: '#B7791F' }] : [])]} />
           <button className="self-start text-[12px] font-semibold text-violet hover:underline" onClick={() => m.setInput(id, 'sl1', eco.policy)}>Set to policy optimum ({f(eco.policy, 1)}%)</button>
-          <Slider id={`rm-${id}`} label="Excess stock cleared by lifecycle discipline" value={inp.removal} onChange={(v) => m.setInput(id, 'removal', v)} min={0} max={90} unit="%" hint={r.control < 1 ? `Only ${f(r.control * 100, 0)}% of it clears where it sits — the rest needs pooling (see network test).` : undefined} />
+          <Slider id={`rm-${id}`} label="Excess stock cleared by lifecycle discipline" value={inp.removal} onChange={(v) => m.setInput(id, 'removal', v)} min={0} max={90} unit="%" hint={r.control < 1 ? `Only ${f(r.control * 100, 0)}% of it clears where it sits — the rest needs pooling at a hub.` : undefined} />
 
           <button onClick={() => setAdv((a) => !a)} className="flex items-center gap-1 text-[12.5px] font-semibold text-ink-2" aria-expanded={adv}><ChevronDown size={14} className={adv ? 'rotate-180' : ''} /> Advanced assumptions</button>
           {adv && (

@@ -23,16 +23,16 @@ function Waterfall({ items, net }: { items: { k: string; v: number; c: string }[
         return (
           <g key={i.k}>
             <rect x={x} y={y(Math.max(from, acc))} width={bw} height={Math.max(1.5, Math.abs(y(from) - y(acc)))} rx="3" fill={i.c} />
-            <text x={x + bw / 2} y={y(Math.max(from, acc)) - 6} textAnchor="middle" fontSize="12" fontWeight="700" fill={i.v >= 0 ? '#0F8A73' : '#C21E2B'} fontFamily="IBM Plex Mono">{i.v >= 0 ? '+' : '−'}{f(Math.abs(i.v), 2)}</text>
-            <text x={x + bw / 2} y={H - 26} textAnchor="middle" fontSize="11.5" fill="#3A2E52" fontFamily="Figtree">{i.k}</text>
+            <text x={x + bw / 2} y={y(Math.max(from, acc)) - 6} textAnchor="middle" fontSize="14" fontWeight="700" fill={i.v >= 0 ? '#0F8A73' : '#C21E2B'} fontFamily="IBM Plex Mono">{i.v >= 0 ? '+' : '−'}{f(Math.abs(i.v), 2)}</text>
+            <text x={x + bw / 2} y={H - 26} textAnchor="middle" fontSize="13" fill="#3A2E52" fontFamily="Figtree">{i.k}</text>
           </g>
         );
       })}
       {(() => { const x = L + items.length * (bw + 14) + 7; return (
         <g>
           <rect x={x} y={y(Math.max(0, net))} width={bw} height={Math.abs(y(0) - y(net))} rx="3" fill="#2A0F4F" />
-          <text x={x + bw / 2} y={y(Math.max(0, net)) - 6} textAnchor="middle" fontSize="12.5" fontWeight="800" fill="#2A0F4F" fontFamily="IBM Plex Mono">{f(net, 2)}</text>
-          <text x={x + bw / 2} y={H - 26} textAnchor="middle" fontSize="11.5" fontWeight="700" fill="#2A0F4F" fontFamily="Figtree">Net / yr</text>
+          <text x={x + bw / 2} y={y(Math.max(0, net)) - 6} textAnchor="middle" fontSize="15" fontWeight="800" fill="#2A0F4F" fontFamily="IBM Plex Mono">{f(net, 2)}</text>
+          <text x={x + bw / 2} y={H - 26} textAnchor="middle" fontSize="13" fontWeight="700" fill="#2A0F4F" fontFamily="Figtree">Net / yr</text>
         </g>
       ); })()}
       <text x={W - L} y={H - 6} textAnchor="end" fontSize="10.5" fill="#6A6180" fontFamily="Figtree">₹ Cr per year</text>
@@ -95,9 +95,9 @@ export function Impact() {
               {IDS.map((id) => {
                 const r = m.results[id];
                 return (
-                  <div key={id} className="grid grid-cols-[88px_1fr_78px] items-center gap-2 text-[12.5px]">
+                  <div key={id} className="grid grid-cols-[104px_1fr_72px] items-center gap-2 text-[16px]">
                     <span className="font-semibold" style={{ color: STAGE[id].color }}>{STAGE[id].name}</span>
-                    <div className="relative h-5 rounded bg-paper">
+                    <div className="relative h-6 rounded bg-paper">
                       <div className="absolute top-0 h-full w-px bg-ink-4" style={{ left: '30%' }} />
                       <div className="absolute top-0 h-full rounded" style={{ left: r.release >= 0 ? '30%' : `${30 - (Math.abs(r.release) / maxRel) * 30}%`, width: `${(Math.abs(r.release) / maxRel) * (r.release >= 0 ? 70 : 30)}%`, background: r.release >= 0 ? '#0F8A73' : '#E3342F' }} />
                     </div>
@@ -110,12 +110,12 @@ export function Impact() {
           </div>
           <div className="card p-4">
             <div className="mb-2 flex items-center justify-between"><div className="text-[14px] font-bold text-aubergine">Scenarios</div><span className="text-[11.5px] text-ink-3">how much excess stock is actually cleared</span></div>
-            <table className="w-full text-[13px]">
-              <thead className="text-[10.5px] uppercase tracking-wider text-ink-3"><tr><th className="py-1 text-left">Scenario</th><th className="text-right">Days</th><th className="text-right">One-time</th><th className="text-right">Hard / yr</th></tr></thead>
+            <table className="w-full text-[16px]">
+              <thead className="text-[12.5px] uppercase tracking-wider text-ink-3"><tr><th className="py-1 text-left">Scenario</th><th className="text-right">Days</th><th className="text-right">One-time</th><th className="text-right">Hard / yr</th></tr></thead>
               <tbody className="num">
                 {scen.map(({ s, p }) => (
                   <tr key={s} onClick={() => m.setScenario(s)} className={`cursor-pointer border-t border-paper-line ${m.scenario === s ? 'bg-violet-soft/60 font-bold' : 'hover:bg-paper'}`}>
-                    <td className="py-1.5">{s} <span className="font-mono text-[10px] text-ink-3">×{SCENARIOS[s]}</span></td>
+                    <td className="py-1.5">{s} <span className="font-mono text-[12px] text-ink-3">×{SCENARIOS[s]}</span></td>
                     <td className="text-right">{f(p.days1)}</td><td className="text-right">{cr(p.release, 1)}</td><td className="text-right">{cr(p.hard, 2)}</td>
                   </tr>
                 ))}

@@ -13,7 +13,7 @@ export function Slider({ id, label, value, onChange, min, max, step = 1, unit = 
         <span className="flex items-center gap-1">
           <input aria-label={typeof label === 'string' ? label : id} type="number" value={value} min={min} max={max} step={step}
             onChange={(e) => { const v = Number(e.target.value); if (!Number.isNaN(v)) onChange(Math.min(max, Math.max(min, v))); }}
-            className="num w-[70px] rounded border border-paper-line bg-white px-1.5 py-0.5 text-right font-mono text-[12.5px] text-aubergine" />
+            className="num w-[84px] rounded border border-paper-line bg-white px-1.5 py-0.5 text-right font-mono text-[16px] text-aubergine" />
           <span className="w-5 text-[11px] text-ink-3">{unit}</span>
         </span>
       </span>

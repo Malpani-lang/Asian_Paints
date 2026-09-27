@@ -22,32 +22,32 @@ function StageRow({ id }: { id: StageId }) {
   return (
     <div className="card overflow-hidden">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-paper-line px-4 py-2.5" style={{ background: `${st.color}0F` }}>
-        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: st.color }} /><b style={{ color: st.color }}>{st.name}</b><span className="text-[12px] text-ink-3">{Math.round(m.params[id].a * 100)}% of demand must meet the dealer SLA</span></div>
-        <span className="text-[12px] text-ink-3">Recommended: <b className="text-aubergine">{OPT.find((x) => x.o === rec.best)!.t}</b></span>
+        <div className="flex items-center gap-2"><span className="h-3 w-3 rounded-full" style={{ background: st.color }} /><b style={{ color: st.color }}>{st.name}</b><span className="text-[16px] text-ink-3">{Math.round(m.params[id].a * 100)}% of demand must meet the dealer SLA</span></div>
+        <span className="text-[16px] text-ink-3">Recommended: <b className="text-aubergine">{OPT.find((x) => x.o === rec.best)!.t}</b></span>
       </div>
-      <div className="grid gap-2 p-3 md:grid-cols-3">
+      <div className="grid gap-3 p-3 lg:grid-cols-3">
         {rec.rows.map((row) => {
           const o = OPT.find((x) => x.o === row.o)!;
           const on = chosen === row.o;
           const dSys = row.systemDays - depot.systemDays;
           return (
             <button key={row.o} onClick={() => m.setNetChoice((p) => ({ ...p, [id]: row.o }))} aria-pressed={on}
-              className={`rounded-xl border p-3 text-left transition-all ${on ? 'shadow-pop' : 'hover:border-violet'} ${!row.r.net.slaOk ? 'bg-vermilion-soft/40' : 'bg-white'}`}
+              className={`rounded-xl border p-4 text-left transition-all ${on ? 'shadow-pop' : 'hover:border-violet'} ${!row.r.net.slaOk ? 'bg-vermilion-soft/40' : 'bg-white'}`}
               style={{ borderColor: on ? st.color : undefined, outline: on ? `2px solid ${st.color}` : undefined }}>
               <div className="flex items-center justify-between gap-2">
-                <span className="text-[14px] font-bold text-aubergine">{o.t}</span>
-                {row.r.net.slaOk ? <span className="inline-flex items-center gap-1 rounded bg-[#E3F4F0] px-1.5 py-0.5 text-[11px] font-bold text-st-maturity"><Check size={12} /> SLA kept</span>
-                  : <span className="inline-flex items-center gap-1 rounded bg-vermilion px-1.5 py-0.5 text-[11px] font-bold text-white"><X size={12} /> SLA broken</span>}
+                <span className="text-[20px] font-bold text-aubergine">{o.t}</span>
+                {row.r.net.slaOk ? <span className="inline-flex items-center gap-1 rounded bg-[#E3F4F0] px-2 py-0.5 text-[14px] font-bold text-st-maturity"><Check size={14} /> SLA kept</span>
+                  : <span className="inline-flex items-center gap-1 rounded bg-vermilion px-2 py-0.5 text-[14px] font-bold text-white"><X size={14} /> SLA broken</span>}
               </div>
-              <div className="mt-0.5 text-[11.5px] text-ink-3">{row.o === 'hybrid' && m.params[id].a >= 1 ? 'All demand is SLA-bound here — same as decentralised' : o.d}</div>
-              <dl className="num mt-2 grid grid-cols-2 gap-x-2 gap-y-1 text-[12.5px]">
+              <div className="mt-1 text-[15px] text-ink-3">{row.o === 'hybrid' && m.params[id].a >= 1 ? 'All demand is SLA-bound here — same as decentralised' : o.d}</div>
+              <dl className="num mt-3 grid grid-cols-[1fr_auto] gap-x-3 gap-y-1.5 text-[18px]">
                 <dt className="text-ink-3">Company days</dt><dd className="text-right font-semibold">{f(row.apDays)} d</dd>
                 <dt className="text-ink-3">+ dealer days</dt><dd className="text-right font-semibold" style={{ color: row.r.net.channelDays > 0.05 ? '#C21E2B' : undefined }}>{row.r.net.channelDays > 0.05 ? '+' : ''}{f(row.r.net.channelDays)} d</dd>
                 <dt className="text-ink-3">System days</dt><dd className="text-right font-bold" style={{ color: dSys > 0.05 ? '#C21E2B' : dSys < -0.05 ? '#0F8A73' : '#2A0F4F' }}>{f(row.systemDays)} d</dd>
                 <dt className="text-ink-3">Extra freight / yr</dt><dd className="text-right">{lakh(row.r.freight)}</dd>
                 <dt className="text-ink-3">Total cost / yr</dt><dd className="text-right font-bold text-aubergine">{lakh(row.annual)}</dd>
               </dl>
-              {on && <div className="mt-2 font-mono text-[10px] font-bold uppercase tracking-wider" style={{ color: st.color }}>● in the business case</div>}
+              {on && <div className="mt-3 font-mono text-[13px] font-bold uppercase tracking-wider" style={{ color: st.color }}>● in the business case</div>}
             </button>
           );
         })}

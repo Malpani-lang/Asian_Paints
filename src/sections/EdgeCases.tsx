@@ -62,8 +62,8 @@ export function EdgeCases() {
 
       <div className="card scroll-x mt-6 p-0">
         <div className="flex items-center justify-between px-4 pt-3"><div className="text-[14px] font-bold text-aubergine">The seven case products</div><Tag p="case" /></div>
-        <table className="mt-2 w-full min-w-[860px] text-left text-[13px]">
-          <thead className="bg-paper-2 text-[10.5px] uppercase tracking-wider text-ink-3"><tr><th className="px-4 py-2">SKU</th><th className="px-2">Stage</th><th className="px-2">Days · service today</th><th className="px-2">Why it still matters</th><th className="px-2">PRISM treatment</th><th className="px-2 text-center">Service</th><th className="px-4 text-center">Days</th></tr></thead>
+        <table className="mt-2 w-full min-w-[1000px] text-left text-[16px]">
+          <thead className="bg-paper-2 text-[12.5px] uppercase tracking-wider text-ink-3"><tr><th className="px-4 py-2">SKU</th><th className="px-2">Stage</th><th className="px-2">Days · service today</th><th className="px-2">Why it still matters</th><th className="px-2">PRISM treatment</th><th className="px-2 text-center">Service</th><th className="px-4 text-center">Days</th></tr></thead>
           <tbody>
             {SKUS.map((s) => (
               <tr key={s.id} className="border-t border-paper-line align-top">

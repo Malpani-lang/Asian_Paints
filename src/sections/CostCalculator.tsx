@@ -20,16 +20,16 @@ function Frontier({ id }: { id: StageId }) {
   const opt = r.slStar <= 0.5 ? -1 : r.fixed + r.sigma1 * inv(r.slStar / 100);
   return (
     <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="Service level versus inventory days, today and with PRISM">
-      {[70, 80, 90, 100].map((v) => <g key={v}><line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="#EEE9F6" /><text x={L - 6} y={y(v) + 4} textAnchor="end" fontSize="10" fill="#6A6180" fontFamily="IBM Plex Mono">{v}%</text></g>)}
-      {Array.from({ length: 8 }, (_, i) => Math.round(x0 + (i * (x1 - x0)) / 7)).map((v) => <text key={v} x={x(v)} y={H - 10} textAnchor="middle" fontSize="10" fill="#6A6180" fontFamily="IBM Plex Mono">{v}d</text>)}
+      {[70, 80, 90, 100].map((v) => <g key={v}><line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="#EEE9F6" /><text x={L - 6} y={y(v) + 4} textAnchor="end" fontSize="13" fill="#6A6180" fontFamily="IBM Plex Mono">{v}%</text></g>)}
+      {Array.from({ length: 8 }, (_, i) => Math.round(x0 + (i * (x1 - x0)) / 7)).map((v) => <text key={v} x={x(v)} y={H - 10} textAnchor="middle" fontSize="13" fill="#6A6180" fontFamily="IBM Plex Mono">{v}d</text>)}
       <path d={path(today)} fill="none" stroke="#9A93AB" strokeWidth="2" strokeDasharray="5 4" />
       <path d={path(prism)} fill="none" stroke={color} strokeWidth="2.8" />
       <line x1={x(inp.days0)} y1={y(inp.sl0)} x2={x(r.days1)} y2={y(inp.sl1)} stroke="#2A0F4F" strokeWidth="1.2" strokeDasharray="2 3" />
       <circle cx={x(inp.days0)} cy={y(inp.sl0)} r="6.5" fill="#fff" stroke="#6A6180" strokeWidth="2.5" />
-      <text x={x(inp.days0) + 9} y={y(inp.sl0) + 4} fontSize="11" fontWeight="700" fill="#6A6180" fontFamily="Figtree">Today</text>
+      <text x={x(inp.days0) + 9} y={y(inp.sl0) + 4} fontSize="14" fontWeight="700" fill="#6A6180" fontFamily="Figtree">Today</text>
       {opt > x0 && opt < x1 && <g><circle cx={x(opt)} cy={y(r.slStar)} r="4.5" fill="#F6A623" stroke="#2A0F4F" /><text x={x(opt)} y={y(r.slStar) - 9} textAnchor="middle" fontSize="10" fill="#8A5A00" fontFamily="Figtree">economic optimum</text></g>}
       <circle cx={x(r.days1)} cy={y(inp.sl1)} r="7" fill={color} stroke="#fff" strokeWidth="2" />
-      <text x={x(r.days1) - 9} y={y(inp.sl1) + 18} textAnchor="end" fontSize="11" fontWeight="700" fill={color} fontFamily="Figtree">PRISM</text>
+      <text x={x(r.days1) - 9} y={y(inp.sl1) + 18} textAnchor="end" fontSize="14" fontWeight="700" fill={color} fontFamily="Figtree">PRISM</text>
     </svg>
   );
 }
@@ -45,10 +45,10 @@ function Anatomy({ id }: { id: StageId }) {
     { k: 'Excess / ageing (no job)', v: excess, c: '#E3342F' },
   ];
   const Row = ({ label, s, total }: { label: string; s: ReturnType<typeof segs>; total: number }) => (
-    <div className="grid grid-cols-[64px_1fr_58px] items-center gap-2">
-      <span className="text-[12px] font-semibold text-ink-2">{label}</span>
+    <div className="grid grid-cols-[72px_1fr_76px] items-center gap-2">
+      <span className="text-[16px] font-semibold text-ink-2">{label}</span>
       <div className="flex h-7 overflow-hidden rounded-md bg-paper-2">{s.map((x) => x.v > 0.05 && <div key={x.k} title={`${x.k}: ${f(x.v)} d`} className="h-full" style={{ width: `${(x.v / max) * 100}%`, background: x.c, opacity: x.k.startsWith('Excess') ? 0.75 : 1 }} />)}</div>
-      <span className="num text-right font-mono text-[12.5px] font-semibold text-aubergine">{f(total)} d</span>
+      <span className="num text-right font-mono text-[16px] font-semibold text-aubergine">{f(total)} d</span>
     </div>
   );
   return (
@@ -77,12 +77,12 @@ function MarginalTest({ id }: { id: StageId }) {
   return (
     <div>
       <div className="scroll-x">
-        <table className="w-full min-w-[320px] text-[12.5px] sm:text-[13px]">
-          <thead className="text-[10.5px] uppercase tracking-wider text-ink-3"><tr><th className="py-1 text-left">Days</th><th className="text-right">Service</th><th className="text-right">Carry</th><th className="text-right">Margin lost</th><th className="text-right">Total</th></tr></thead>
+        <table className="w-full min-w-[420px] text-[16px]">
+          <thead className="text-[12.5px] uppercase tracking-wider text-ink-3"><tr><th className="py-1 text-left">Days</th><th className="text-right">Service</th><th className="text-right">Carry</th><th className="text-right">Margin lost</th><th className="text-right">Total</th></tr></thead>
           <tbody className="num">
             {rows.map((x, i) => (
               <tr key={i} className={`border-t border-paper-line ${i === 1 ? 'bg-violet-soft/60 font-semibold' : ''}`}>
-                <td className="py-1.5">{f(x.d)} d {i === 1 && <span className="font-mono text-[10px] text-violet">proposed</span>}</td>
+                <td className="py-1.5">{f(x.d)} d {i === 1 && <span className="font-mono text-[12px] text-violet">proposed</span>}</td>
                 <td className="text-right">{f(x.sl, 1)}%</td>
                 <td className="text-right">{lakh(x.carry)}</td>
                 <td className="text-right">{lakh(x.short)}</td>
@@ -175,8 +175,8 @@ export function CostCalculator() {
       {/* Portfolio roll-up */}
       <div className="card scroll-x mt-6 p-0">
         <div className="flex flex-wrap items-center justify-between gap-2 px-4 pt-3"><div className="text-[14px] font-bold text-aubergine">All five stages — per ₹{f(m.globals.fgBase, 0)} Cr of FG inventory</div><span className="text-[12px] text-ink-3">Click a row to edit it</span></div>
-        <table className="mt-2 w-full min-w-[820px] text-left text-[13px]">
-          <thead className="bg-paper-2 text-[10.5px] uppercase tracking-wider text-ink-3">
+        <table className="mt-2 w-full min-w-[980px] text-left text-[16px]">
+          <thead className="bg-paper-2 text-[12.5px] uppercase tracking-wider text-ink-3">
             <tr><th className="px-4 py-2">Stage</th><th className="px-2">Service today → PRISM</th><th className="px-2">Days today → PRISM</th><th className="px-2 text-right">Working capital</th><th className="px-2 text-right">Holding + write-off / yr</th><th className="px-2 text-right">Service margin / yr</th><th className="px-4 text-right">Stocking</th></tr>
           </thead>
           <tbody className="num">

@@ -10,8 +10,8 @@ export function Today() {
       title={<>One safety-stock policy for every SKU — <span className="text-violet">whatever its stage.</span></>}
       lede="Asian Paints already has the safety-stock and coverage logic. What it doesn’t do is classify SKUs by lifecycle, so a launch, a best-seller and a fading variant are run on the same rules. PRISM keeps the engine and changes three inputs per stage: the service target, the discipline on excess stock, and where the stock sits.">
       <div className="card scroll-x p-0">
-        <table className="w-full min-w-[720px] text-left text-[14px]">
-          <thead className="bg-paper-2 text-[11px] uppercase tracking-wider text-ink-3">
+        <table className="w-full min-w-[760px] text-left text-[16px]">
+          <thead className="bg-paper-2 text-[12.5px] uppercase tracking-wider text-ink-3">
             <tr><th className="px-4 py-2">Stage</th><th className="px-2">% SKUs</th><th className="px-2">% FG value</th><th className="px-2">% inventory cost</th><th className="px-2">Obsolescence risk</th><th className="px-2">Days today*</th><th className="px-2">Service today*</th></tr>
           </thead>
           <tbody className="num">

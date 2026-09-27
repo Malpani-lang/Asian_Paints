@@ -1,10 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Calculator } from 'lucide-react';
 import { STAGES } from '../data/caseData';
-import { useModel } from '../state';
-import { cr, f } from '../utils/model';
 import { scrollToSection } from '../hooks/usePresentation';
-import { Tag } from '../components/ui';
 
 /* Network columns for the hero animation (positions in a 640×360 viewBox). */
 const COLS = [
@@ -72,7 +69,6 @@ function HeroNetwork() {
 }
 
 export function Hero() {
-  const { total, inputs, globals } = useModel();
   return (
     <section id="hero" data-section className="relative overflow-hidden bg-aubergine-deep text-white">
       <div className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(1200px 500px at 75% 10%, #4A1D8A 0%, transparent 60%), radial-gradient(800px 400px at 0% 100%, #3B1670 0%, transparent 60%)' }} />
@@ -95,24 +91,7 @@ export function Hero() {
           </div>
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-2 sm:p-4"><HeroNetwork /></div>
         </div>
-
-        <div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 md:grid-cols-4">
-          <Kpi v={cr(total.release, 1)} l="working capital released (one-time)" accent />
-          <Kpi v={`${cr(total.hard, 2)}`} l="hard savings per year (holding + write-off − extra freight)" />
-          <Kpi v={<>{f(total.days0, 1)} → {f(total.days1, 1)} d</>} l="portfolio inventory days" />
-          <Kpi v={<>{f(inputs.intro.sl0, 1)}% → {f(inputs.intro.sl1, 0)}%</>} l="launch (Introduction) service level" />
-        </div>
-        <div className="mt-2 flex flex-wrap items-center gap-2 text-[11.5px] text-white/55"><Tag p="assumption" /> Per ₹{f(globals.fgBase, 0)} Cr of finished-goods inventory, base scenario. Every assumption is listed under “Assumptions”.</div>
       </div>
     </section>
-  );
-}
-
-function Kpi({ v, l, accent }: { v: React.ReactNode; l: string; accent?: boolean }) {
-  return (
-    <div className={`${accent ? 'bg-[#3B1670]' : 'bg-aubergine-deep/90'} px-4 py-4`}>
-      <div className={`num font-display text-[28px] font-bold leading-none sm:text-[34px] ${accent ? 'text-saffron' : ''}`}>{v}</div>
-      <div className="mt-1.5 text-[12.5px] text-white/70">{l}</div>
-    </div>
   );
 }
